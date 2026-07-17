@@ -22,6 +22,9 @@ const initialData = [
   { id: 'NV07', name: 'Nguyễn Văn G', email: 'nvg@company.com', age: 25, address: 'Hà Nội', department: 'Support' },
   { id: 'NV08', name: 'Trần Thị H', email: 'tth@company.com', age: 32, address: 'HCM', department: 'HR' },
   { id: 'NV09', name: 'Lê Hoàng I', email: 'lhi@company.com', age: 28, address: 'Phan Thiết', department: 'Marketing' },
+  { id: 'NV10', name: 'Trà Lê N', email: 'tln@company.com', age: 25, address: 'Hà Tĩnh', department: 'Support' },
+  { id: 'NV11', name: 'Trương Bảo B', email: 'tbb@company.com', age: 19, address: 'Quảng Ninh', department: 'QA' },
+  { id: 'NV12', name: 'Văn Ngọc Z', email: 'vnz@company.com', age: 24, address: 'Phan Thiết', department: 'Marketing' },
 ];
 
 const EmployeeManager = () => {
@@ -112,35 +115,60 @@ const EmployeeManager = () => {
   return (
     <div className={styles.container}>
       {contextHolder}
-      <h2 style={{ marginBottom: '20', color: 'black' }}>Quản lý nhân viên</h2>
 
-      <div>
-        <Input
-          placeholder='Tìm theo tên hoặc email'
-          prefix={<SearchOutlined />}
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-          style={{ width: 300 }}
-        />
-        <Select
-          value={filterDept}
-          onChange={(value) => setFilterDept(value)}
-          style={{ width: 150 }}
-          options={[
-            { value: 'All', label: 'Tất cả' },
-            { value: 'IT', label: 'Phòng IT' },
-            { value: 'HR', label: 'Phòng HR' },
-            { value: 'Marketing', label: 'Phòng Marketing' },
-            { value: 'Support', label: 'Phòng Support' },
-            { value: 'QA', label: 'Phòng QA' },
-          ]}
-        />
-        <Button type='primary' onClick={openCreateModal}>
-          Thêm Nhân Viên
-        </Button>
-      </div>
-      <div className={styles.tableCard}>
-        <Table columns={columns} dataSource={filteredEmployees} rowKey='id' pagination={{ pageSize: 5 }} />
+      <div className={styles['content-wrapper']}>
+        <h2 style={{ marginBottom: '20px', color: 'black', textAlign: 'center' }}>Quản lý nhân viên</h2>
+
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '8px',
+            marginBottom: '20px',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Input
+            placeholder='Tìm theo tên hoặc email'
+            prefix={<SearchOutlined />}
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            style={{ width: 300 }}
+          />
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <Select
+              value={filterDept}
+              onChange={(value) => setFilterDept(value)}
+              style={{ width: 150 }}
+              options={[
+                { value: 'All', label: 'Tất cả' },
+                { value: 'IT', label: 'Phòng IT' },
+                { value: 'HR', label: 'Phòng HR' },
+                { value: 'Marketing', label: 'Phòng Marketing' },
+                { value: 'Support', label: 'Phòng Support' },
+                { value: 'QA', label: 'Phòng QA' },
+              ]}
+            />
+            <Button type='primary' onClick={openCreateModal}>
+              Thêm Nhân Viên
+            </Button>
+          </div>
+        </div>
+        <div className={styles.tableCard}>
+          <Table
+            columns={columns}
+            dataSource={filteredEmployees}
+            rowKey='id'
+            pagination={{
+              defaultPageSize: 10,
+              showSizeChanger: true,
+              pageSizeOptions: ['5', '10', '20'],
+              showTotal: (total, range) => `${range[0]}-${range[1]} của ${total} nhân viên`,
+            }}
+            scroll={{ x: 'max-content' }}
+          />
+        </div>
       </div>
       <Modal
         title={editingEmployee ? 'Chỉnh Sửa Nhân Viên' : 'Thêm Nhân Viên Mới'}
