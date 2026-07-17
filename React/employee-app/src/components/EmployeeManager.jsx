@@ -33,11 +33,16 @@ const EmployeeManager = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const columns = [
-    { title: 'ID', dataIndex: 'id', key: 'id' },
-    { title: 'Họ Tên', dataIndex: 'name', key: 'name' },
+    { title: 'ID', dataIndex: 'id', key: 'id', sorter: (a, b) => a.id.localeCompare(b.id) },
+    { title: 'Họ Tên', dataIndex: 'name', key: 'name', sorter: (a, b) => a.name.localeCompare(b.name) },
     { title: 'Email', dataIndex: 'email', key: 'email' },
     { title: 'Address', dataIndex: 'address', key: 'address' },
-    { title: 'Phòng Ban', dataIndex: 'department', key: 'department' },
+    {
+      title: 'Phòng Ban',
+      dataIndex: 'department',
+      key: 'department',
+      sorter: (a, b) => a.department.localeCompare(b.department),
+    },
 
     {
       title: 'Hành Động',
